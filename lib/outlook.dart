@@ -5,6 +5,7 @@ import 'callspage.dart';
 import 'status.dart';
 import 'camerapage.dart';
 import 'contacts.dart';
+
 class Outlook extends StatefulWidget {
   var cameras;
   Outlook(this.cameras);
@@ -15,30 +16,31 @@ class Outlook extends StatefulWidget {
 class _OutlookState extends State<Outlook> with SingleTickerProviderStateMixin {
   TabController _tabController;
   @override
-  void initState(){
+  void initState() {
     super.initState();
-  _tabController=TabController(length: 4, vsync: this, initialIndex: 1);
+    _tabController = TabController(length: 4, vsync: this, initialIndex: 1);
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
-        title:Text('Whatsapp') ,
+      appBar: AppBar(
+        title: Text('Whatsapp'),
         elevation: 0.5,
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.white,
           tabs: <Widget>[
             Tab(
-              icon:Icon(Icons.camera_alt),
+              icon: Icon(Icons.camera_alt),
             ),
             Tab(
               text: 'Chats',
             ),
-             Tab(
+            Tab(
               text: 'Status',
             ),
             Tab(
-              text:'Calls',
+              text: 'Calls',
             )
           ],
         ),
@@ -50,20 +52,26 @@ class _OutlookState extends State<Outlook> with SingleTickerProviderStateMixin {
           Icon(Icons.more_vert)
         ],
       ),
-      body: 
-      TabBarView(
-        controller: _tabController,
-        children: <Widget>[CameraPage(cameras),ChatsPage(),StatusPage(),CallsPage()]),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-      setState(() {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>Contactslis()));
-      });
-        
-      },
-      backgroundColor: Theme.of(context).accentColor,
-      child: Icon(Icons.message,color: Colors.white,),
+      body: TabBarView(controller: _tabController, children: <Widget>[
+        CameraPage(cameras),
+        ChatsPage(),
+        StatusPage(),
+        CallsPage()
+      ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Contactslis()));
+          });
+        },
+        backgroundColor: Theme.of(context).accentColor,
+        child: Icon(
+          Icons.message,
+          color: Colors.white,
+        ),
       ),
-    ); 
+    );
   }
 }
-//  
+//

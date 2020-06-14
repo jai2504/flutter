@@ -14,7 +14,7 @@ class _ChatsPageState extends State<ChatsPage> {
       itemCount: dummyData.length,
       itemBuilder: (context, index) => Column(
         children: <Widget>[
-         /* Divider(
+          /* Divider(
             height: 10.0,
           ),*/
           RaisedButton(
