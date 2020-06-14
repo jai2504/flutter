@@ -31,7 +31,7 @@ class _ChatsPageState extends State<ChatsPage> {
                 radius: 20,
                 foregroundColor: Theme.of(context).primaryColor,
                 backgroundColor: Colors.grey,
-                backgroundImage: NetworkImage(dummyData[index].profilepic),
+                //backgroundImage: NetworkImage(dummyData[index].profilepic),
               ),
               title: new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

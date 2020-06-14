@@ -4,6 +4,7 @@ import 'chatspage.dart';
 import 'callspage.dart';
 import 'status.dart';
 import 'camerapage.dart';
+import 'contacts.dart';
 class Outlook extends StatefulWidget {
   var cameras;
   Outlook(this.cameras);
@@ -54,7 +55,10 @@ class _OutlookState extends State<Outlook> with SingleTickerProviderStateMixin {
         controller: _tabController,
         children: <Widget>[CameraPage(cameras),ChatsPage(),StatusPage(),CallsPage()]),
       floatingActionButton: FloatingActionButton(onPressed: (){
-        print('Button Pressed');
+      setState(() {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>Contactslis()));
+      });
+        
       },
       backgroundColor: Theme.of(context).accentColor,
       child: Icon(Icons.message,color: Colors.white,),
@@ -62,3 +66,4 @@ class _OutlookState extends State<Outlook> with SingleTickerProviderStateMixin {
     ); 
   }
 }
+//  
