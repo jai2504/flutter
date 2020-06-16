@@ -9,24 +9,62 @@ class Contactslis extends StatefulWidget {
 }
 
 class _ContactslisState extends State<Contactslis> {
-  List<Contact> contact = [];
+  List<ListTile> _optionsAndContacts = [];
+
+  ListTile get _addGroup => ListTile(
+        leading: CircleAvatar(
+          child: Icon(
+            Icons.group_add,
+            color: Colors.white,
+          ),
+          backgroundColor: Theme.of(context).accentColor,
+        ),
+      );
+
+  ListTile get _addContact => ListTile(
+        leading: CircleAvatar(
+          radius: 25,
+          child: Center(
+              child: Icon(
+            Icons.person_add,
+            color: Colors.white,
+          )),
+          backgroundColor: Theme.of(context).accentColor,
+        ),
+      );
+
   @override
   void initState() {
     super.initState();
     getContacts();
   }
 
+  ListTile _contactToListTile(Contact c) {
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundColor: Colors.grey,
+      ),
+      title: Text(c.displayName),
+      subtitle: Text(c.phones.isEmpty ? "" : c.phones.first.value),
+    );
+  }
+
   getContacts() async {
     if (await Permission.contacts.request().isGranted) {
-      List<Contact> _contacts =
+      List<Contact> contacts =
           (await ContactsService.getContacts(withThumbnails: false)).toList();
-      setState(() {
-        contact = _contacts;
-      });
+
+      List<ListTile> contactsAsList =
+          contacts.map((c) => _contactToListTile(c)).toList();
+
+      /// `🚀 First added addGroup and addContact options to the list 🚀`
+      _optionsAndContacts = [_addGroup, _addContact];
+
+      /// `🚀 Then add all the contacts to the list 🚀`
+      setState(() => _optionsAndContacts.addAll(contactsAsList));
     }
   }
 
-  get len => contact.length;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +96,7 @@ class _ContactslisState extends State<Contactslis> {
               margin: EdgeInsets.only(left: 72, bottom: 5),
               height: 18.0,
               alignment: Alignment.bottomLeft,
-              child: Text('$len Contacts'),
+              child: Text('${_optionsAndContacts.length - 2} Contacts'),
             ),
           ),
           actions: <Widget>[
@@ -80,46 +118,11 @@ class _ContactslisState extends State<Contactslis> {
           ],
         ),
       ),
-       body: Column(children: <Widget>[
-         ListTile(
-           leading: CircleAvatar(
-             child:Icon(Icons.group_add,color: Colors.white,),
-             backgroundColor: Theme.of(context).accentColor,
-           ),
-
-         ),
-         ListTile(
-             leading: CircleAvatar(
-               radius: 25,
-             child:
-             Center(child: Icon(Icons.person_add,color: Colors.white,)),
-             backgroundColor: Theme.of(context).accentColor,
-           ),
-         ),
-        Expanded(
-          child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: len,
-              itemBuilder: (context, index) {
-                Contact c = contact[index];
-                return Column(
-                  children: <Widget>[
-                    ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.grey,
-                      ),
-                      title: Text(c.displayName),
-                      subtitle: Text(c.phones.elementAt(0).value),
-                    )
-                  ],
-                );
-              }
-              ),
-        ),
-      ]),
+      body: ListView(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        children: _optionsAndContacts,
+      ),
     );
   }
 }
-/*
-
-     */
