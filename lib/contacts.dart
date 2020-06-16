@@ -19,11 +19,12 @@ class _ContactslisState extends State<Contactslis> {
           ),
           backgroundColor: Theme.of(context).accentColor,
         ),
+        title: Text('New Group'),
       );
 
   ListTile get _addContact => ListTile(
         leading: CircleAvatar(
-          radius: 25,
+          radius: 20,
           child: Center(
               child: Icon(
             Icons.person_add,
@@ -31,6 +32,7 @@ class _ContactslisState extends State<Contactslis> {
           )),
           backgroundColor: Theme.of(context).accentColor,
         ),
+        title: Text('New Contact'),
       );
 
   @override
